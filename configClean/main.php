@@ -94,6 +94,9 @@ require $blogpath . 'zb_system/admin/admin_top.php';
 </div>
 <script>
   $(function() {
+    $(".isOn-1,.isSys-1").each(function(){
+      $(this).parents("tr").hide()
+    });
     $(".js-view").click(function() {
       let id = $(this).data("id");
       if (!$(`.js-${id}`).is(":hidden")) {

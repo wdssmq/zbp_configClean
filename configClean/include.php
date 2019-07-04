@@ -4,7 +4,15 @@ RegisterPlugin("configClean", "ActivePlugin_configClean");
 
 function ActivePlugin_configClean()
 { }
-
+function configClean_checkIsOn($name)
+{
+  foreach ($GLOBALS['activedapps'] as $value) {
+    if (strtolower($name) === strtolower($value)) {
+      return true;
+    }
+  }
+  return false;
+}
 function configClean_list()
 {
   global $zbp;
@@ -24,7 +32,9 @@ function configClean_list()
 
   foreach ($zbp->configs    as $k => $v) {
     // $html .= "<li><a id=\"$k\" href=\"javascript:;\" onclick=\"clk(this);run('open','$k');\">$k</a></li>";
-    $isOn = $zbp->CheckPlugin($k) ? 1 : 0;
+    // $listOn = strtolower($zbp->option['ZC_USING_PLUGIN_LIST']);
+
+    $isOn = $zbp->CheckPlugin($k) || configClean_checkIsOn($k) ? 1 : 0;
     $isSys = HasNameInString("cache|system|AppCentre", $k)  ? 1 : 0;
     $viewButton = "";
     $delButton = "";
