@@ -71,11 +71,16 @@ require $blogpath . 'zb_system/admin/admin_top.php';
   .isSys-1>span {
     display: none;
   }
+
+  .tr-gray {
+    background-color: #F4F4F4;
+  }
 </style>
 <div id="divMain">
   <div class="divHeader"><?php echo $blogtitle; ?><small><a title="刷新" href="main.php" style="font-size: 16px;display: inline-block;margin-left: 5px;">刷新</a></small></div>
   <div class="SubMenu">
     <a href="main.php" title="首页"><span class="m-left m-now">首页</span></a>
+    <a href="javascript:;" class="js-toggleAll" title="显示/隐藏启用中的配置项"><span class="m-left">显示全部</span></a>
     <?php require_once "about.php"; ?>
   </div>
   <div id="divMain2">
@@ -94,9 +99,26 @@ require $blogpath . 'zb_system/admin/admin_top.php';
 </div>
 <script>
   $(function() {
-    $(".isOn-1,.isSys-1").each(function(){
-      $(this).parents("tr").hide()
+    function fnStripe() {
+      $("tr.item:visible").each(function(i) {
+        if (i % 2 !== 0) {
+          $(this).addClass("tr-gray");
+        } else {
+          $(this).removeClass("tr-gray");
+        }
+      });
+    }
+    $(".js-toggleAll").click(function() {
+      $(".isOn-1,.isSys-1").each(function() {
+        $(this).parents("tr").toggle();
+        // $(this).parents("tr").toggleClass("item");
+      });
+      fnStripe();
     });
+    $(".isOn-1,.isSys-1").each(function() {
+      $(this).parents("tr").hide();
+    });
+    fnStripe();
     $(".js-view").click(function() {
       let id = $(this).data("id");
       if (!$(`.js-${id}`).is(":hidden")) {

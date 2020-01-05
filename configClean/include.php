@@ -54,14 +54,14 @@ function configClean_list()
       $isTheme = 0;
       $isPlugin = 0;
     }
+    $viewLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?act=view&appID={$k}");
+    $viewButton = "<a class=\"button js-view\" data-id=\"{$k}\" href=\"{$viewLink}\" title=\"查看内容\">查看</a>";
     if (!$isOn && !$isSys) {
       // $delLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?act=del&appID={$k}", $k);
-      $viewLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?act=view&appID={$k}");
-      $viewButton = "<a class=\"button js-view\" data-id=\"{$k}\" href=\"{$viewLink}\" title=\"查看内容\">查看</a>";
       $delLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?act=del&appID={$k}");
       $delButton = "<a class=\"button\" href=\"{$delLink}\" title=\"删除该配置项\" onclick=\"return window.confirm(&quot;单击“确定”继续。单击“取消”停止。&quot;);\"><img height=\"16\" width=\"16\" src=\"{$zbp->host}zb_users/plugin/AppCentre/images/delete.png\"></a>";
     }
-    $html .= "<tr><td>{$k}</td><td class='isSys-{$isSys}'><span class='isOn-{$isOn}'></span><span class='isTheme-{$isTheme} isPlugin-{$isPlugin}'></span></td><td>{$viewButton}</td><td>{$delButton}</td></tr>";
+    $html .= "<tr class=\"item\"><td>{$k}</td><td class='isSys-{$isSys}'><span class='isOn-{$isOn}'></span><span class='isTheme-{$isTheme} isPlugin-{$isPlugin}'></span></td><td>{$viewButton}</td><td>{$delButton}</td></tr>";
     $html .= "<tr class=\"view js-{$k}\" id=\"\"><td colspan=\"4\"></td></tr>";
   }
 

@@ -51,9 +51,6 @@ i.xnxf-tip {
 
 </table>
 <p>－－－－下边是推广链接－－－－</p>
-<p>－－<b><a title="注册 - 一览阅读" target="_blank" href="https://www.yilan.io/signup?inviteCode=59ca38d5ebdbdd981524823e">注册 - 一览阅读</a>（送7天VIP）</b>－－</p>
-<p>－－<a title="Z-Blog资讯 - 一览" target="_blank" href="http://www.yilan.io/subject/5b9ba744fcd36fbc1d1618ab">Z-Blog资讯 - 一览</a>－－</p>
-<p>－－<a title="沉冰浮水 - 一览" target="_blank" href="http://www.yilan.io/site/5b9ba575f43f90c11d460025">沉冰浮水 - 一览</a>－－</p>
 </div>
 <div style="clear: both"></div>
 <script type="text/javascript">
