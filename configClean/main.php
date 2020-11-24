@@ -48,16 +48,16 @@ require $blogpath . 'zb_system/admin/admin_top.php';
     content: "启用";
   }
 
+  .isOn-0::before {
+    content: "未启用";
+  }
+
   .isTheme-1::before {
     content: "（主题）";
   }
 
   .isPlugin-1::before {
     content: "（插件）";
-  }
-
-  .isOn-0::before {
-    content: "未启用";
   }
 
   .isTheme-0.isPlugin-0::before {
@@ -70,6 +70,10 @@ require $blogpath . 'zb_system/admin/admin_top.php';
 
   .isSys-1>span {
     display: none;
+  }
+
+  .hasCache-1::before{
+    content: "[cache]";
   }
 
   .tr-gray {

@@ -3,7 +3,8 @@
 RegisterPlugin("configClean", "ActivePlugin_configClean");
 
 function ActivePlugin_configClean()
-{ }
+{
+}
 function configClean_checkIsOn($name)
 {
   foreach ($GLOBALS['activedapps'] as $value) {
@@ -42,32 +43,42 @@ function configClean_list()
 
     $app = new App();
     if ($app->LoadInfoByXml('theme', $k) == true) {
+      $dir = $app->GetDir();
       $isTheme = 1;
       $isPlugin = 0;
       // if ($app->HasPlugin()) {
       //   array_unshift($plugins, $app);
       // }
     } else if ($app->LoadInfoByXml('plugin', $k) == true) {
+      $dir = $app->GetDir();
       $isTheme = 0;
       $isPlugin = 1;
     } else {
+      $dir = $zbp->host;
       $isTheme = 0;
       $isPlugin = 0;
     }
     $viewLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?act=view&appID={$k}");
     $viewButton = "<a class=\"button js-view\" data-id=\"{$k}\" href=\"{$viewLink}\" title=\"查看内容\">查看</a>";
-    if (!$isOn && !$isSys) {
+    if (!$isTheme && !$isPlugin && !$isSys) {
       // $delLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?act=del&appID={$k}", $k);
       $delLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?act=del&appID={$k}");
       $delButton = "<a class=\"button\" href=\"{$delLink}\" title=\"删除该配置项\" onclick=\"return window.confirm(&quot;单击“确定”继续。单击“取消”停止。&quot;);\"><img height=\"16\" width=\"16\" src=\"{$zbp->host}zb_users/plugin/AppCentre/images/delete.png\"></a>";
     }
-    $html .= "<tr class=\"item\"><td>{$k}</td><td class='isSys-{$isSys}'><span class='isOn-{$isOn}'></span><span class='isTheme-{$isTheme} isPlugin-{$isPlugin}'></span></td><td>{$viewButton}</td><td>{$delButton}</td></tr>";
+    if (is_dir("{$dir}cache")) {
+      $hasCache = 1;
+    } else {
+      $hasCache = 0;
+    }
+    $html .= "<tr class=\"item\"><td>{$k}</td><td class='isSys-{$isSys}'><span class='isOn-{$isOn}'></span><span class='isTheme-{$isTheme} isPlugin-{$isPlugin}'></span><span class='hasCache-{$hasCache}'></span></td><td>{$viewButton}</td><td>{$delButton}</td></tr>";
     $html .= "<tr class=\"view js-{$k}\" id=\"\"><td colspan=\"4\"></td></tr>";
   }
 
   return $html;
 }
 function InstallPlugin_configClean()
-{ }
+{
+}
 function UninstallPlugin_configClean()
-{ }
+{
+}
