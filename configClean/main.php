@@ -30,56 +30,12 @@ if (GetVars('act', 'GET') == 'view') {
   JsonReturn($zbp->Config($appID)->GetData());
   die();
 }
-
+InstallPlugin_configClean();
 $blogtitle = '配置项扫描';
 require $blogpath . 'zb_system/admin/admin_header.php';
 require $blogpath . 'zb_system/admin/admin_top.php';
 ?>
-<style>
-  .view {
-    display: none;
-  }
-
-  .view td {
-    padding: 1rem;
-  }
-
-  .isOn-1::before {
-    content: "启用";
-  }
-
-  .isOn-0::before {
-    content: "未启用";
-  }
-
-  .isTheme-1::before {
-    content: "（主题）";
-  }
-
-  .isPlugin-1::before {
-    content: "（插件）";
-  }
-
-  .isTheme-0.isPlugin-0::before {
-    content: "（不存在）";
-  }
-
-  .isSys-1::before {
-    content: "（系统）";
-  }
-
-  .isSys-1>span {
-    display: none;
-  }
-
-  .hasCache-1::before{
-    content: "[cache]";
-  }
-
-  .tr-gray {
-    background-color: #F4F4F4;
-  }
-</style>
+<link rel="stylesheet" href="css/main.css">
 <div id="divMain">
   <div class="divHeader"><?php echo $blogtitle; ?><small><a title="刷新" href="main.php" style="font-size: 16px;display: inline-block;margin-left: 5px;">刷新</a></small></div>
   <div class="SubMenu">

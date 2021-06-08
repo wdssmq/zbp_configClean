@@ -76,8 +76,22 @@ function configClean_list()
 
   return $html;
 }
+// 从启用列表中删除不存在的插件
+function configClean_DelUnExistInList()
+{
+  global $zbp;
+  foreach (explode('|', $zbp->Config('system')->ZC_USING_PLUGIN_LIST) as $plugin) {
+    $app = new App();
+    if ($app->LoadInfoByXml('plugin', $plugin) == true) {
+    } else {
+      $zbp->Config('system')->ZC_USING_PLUGIN_LIST = DelNameInString($zbp->Config('system')->ZC_USING_PLUGIN_LIST, $plugin);
+    }
+  }
+  $zbp->Config('system')->Save();
+}
 function InstallPlugin_configClean()
 {
+  configClean_DelUnExistInList();
 }
 function UninstallPlugin_configClean()
 {
