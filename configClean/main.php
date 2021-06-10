@@ -13,19 +13,25 @@ if (!$zbp->CheckPlugin('configClean')) {
 }
 
 $act = GetVars('act', 'GET');
-$suc = GetVars('suc', 'GET');
+$type = GetVars('type', 'GET');
 $appID = GetVars('appID', 'GET');
-if (GetVars('act', 'GET') == 'del') {
-  CheckIsRefererValid($appID);
-  if (!HasNameInString("cache|system", $appID) && !$zbp->CheckPlugin($appID)) {
+$modName = GetVars('modName', 'GET');
+if ($act === 'del') {
+  CheckIsRefererValid();
+  if ($type === 'config' && !HasNameInString("cache|system", $appID) && !$zbp->CheckPlugin($appID)) {
     $zbp->DelConfig($appID);
+  }
+  if ($type === 'mod') {
+    // $zbp->LoadModules();
+    $mod = $zbp->modulesbyfilename[$modName];
+    $mod->Del();
   }
   $zbp->BuildTemplate();
   $zbp->SetHint('good');
-  Redirect('./main.php' . ($suc == null ? '' : '?act=$suc'));
+  Redirect('./main.php');
 }
 if (GetVars('act', 'GET') == 'view') {
-  CheckIsRefererValid($appID);
+  CheckIsRefererValid();
   header('Content-type: application/json');
   JsonReturn($zbp->Config($appID)->GetData());
   die();
@@ -43,9 +49,10 @@ require $blogpath . 'zb_system/admin/admin_top.php';
     <a href="javascript:;" class="js-toggleAll" title="显示/隐藏启用中的配置项"><span class="m-left">显示全部</span></a>
     <?php require_once "about.php"; ?>
   </div>
+  <!-- #divMin2 -->
   <div id="divMain2">
-    <!-- <form action="<?php echo BuildSafeURL("main.php?act=save"); ?>" method="post"> -->
-    <table width="100%" class="tableBorder">
+    <h3>配置项管理</h3>
+    <table id="configs" width="100%" class="tableBorder">
       <tr>
         <th width="10%">项目</th>
         <th>状态</th>
@@ -54,8 +61,19 @@ require $blogpath . 'zb_system/admin/admin_top.php';
       </tr>
       <?php echo configClean_list(); ?>
     </table>
-    <!-- </form> -->
+    <h3>模块管理</h3>
+    <p>未验证模块归属应用是否启用中，请自行判断；</p>
+    <p>对于开发者，请使用<code>theme_主题ID</code>、<code>plugin_插件ID</code>设置<code>$mod->Source</code>字段；</p>
+    <table width="100%" class="tableBorder">
+      <tr>
+        <th width="25%">项目</th>
+        <th width="15%">来源</th>
+        <th>操作</th>
+      </tr>
+      <?php echo configClean_modulesList(); ?>
+    </table>
   </div>
+  <!-- /#divMain2 -->
 </div>
 <script>
   $(function() {

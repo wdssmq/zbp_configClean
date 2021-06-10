@@ -62,7 +62,7 @@ function configClean_list()
     $viewButton = "<a class=\"button js-view\" data-id=\"{$k}\" href=\"{$viewLink}\" title=\"查看内容\">查看</a>";
     if (!$isTheme && !$isPlugin && !$isSys) {
       // $delLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?act=del&appID={$k}", $k);
-      $delLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?act=del&appID={$k}");
+      $delLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?type=config&act=del&appID={$k}");
       $delButton = "<a class=\"button\" href=\"{$delLink}\" title=\"删除该配置项\" onclick=\"return window.confirm(&quot;单击“确定”继续。单击“取消”停止。&quot;);\"><img height=\"16\" width=\"16\" src=\"{$zbp->host}zb_users/plugin/AppCentre/images/delete.png\"></a>";
     }
     if (is_dir("{$dir}cache")) {
@@ -72,6 +72,28 @@ function configClean_list()
     }
     $html .= "<tr class=\"item\"><td>{$k}</td><td class='isSys-{$isSys}'><span class='isOn-{$isOn}'></span><span class='isTheme-{$isTheme} isPlugin-{$isPlugin}'></span><span class='hasCache-{$hasCache}'></span></td><td>{$viewButton}</td><td>{$delButton}</td></tr>";
     $html .= "<tr class=\"view js-{$k}\" id=\"\"><td colspan=\"4\"></td></tr>";
+  }
+
+  return $html;
+}
+function configClean_modulesList($var = null)
+{
+  global $zbp;
+
+  $tplTr = '<tr class="item"><td>-name-</td><td class="isSys--isSys-">-source-</td><td>-act-</td></tr>';
+  $html = '';
+
+  $zbp->LoadModules();
+
+  foreach ($zbp->modulesbyfilename as $name => $mod) {
+    $isSys = $mod->Source === 'system' ? 1 : 0;
+    $delButton = "";
+    if (!$isSys) {
+      // $delLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?act=del&appID={$k}", $k);
+      $delLink = BuildSafeURL("{$zbp->host}zb_users/plugin/configClean/main.php?type=mod&act=del&modName={$name}");
+      $delButton = "<a class=\"button\" href=\"{$delLink}\" title=\"删除该模块\" onclick=\"return window.confirm(&quot;单击“确定”继续。单击“取消”停止。&quot;);\"><img height=\"16\" width=\"16\" src=\"{$zbp->host}zb_users/plugin/AppCentre/images/delete.png\"></a>";
+    }
+    $html .= strtr($tplTr, array("-name-" => "{$mod->Name}「{$name}」", "-source-" => $mod->Source, "-isSys-" => $isSys, "-act-" => $delButton));
   }
 
   return $html;

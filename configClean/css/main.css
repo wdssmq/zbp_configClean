@@ -38,6 +38,15 @@
   content: "[cache]";
 }
 
-.tr-gray {
+#configs .tr-gray {
   background-color: #F4F4F4;
+}
+
+
+code {
+  border-radius: 2px;
+  color: #e96900;
+  margin: 0 2px;
+  padding: 3px 5px;
+  white-space: pre-wrap;
 }
